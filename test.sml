@@ -5,8 +5,9 @@ comment
 
 val x = 5;
 
-x = 6 (* evaluates to false *)
-	
+(* x = 6 (* evaluates to false *)
+ *)
+
 val z = ~2; (* -2 *)
 val z0 = abs z;
 val e1 = true;
@@ -29,4 +30,20 @@ fun pow (x: int, y: int) =
 
 val x = (2,3)
 val ans = pow x
+
+(* pair: ta * tb *)
+val e = (3, 2.0)
+(#1 e)
+(#2 e)	      
+
+fun swap (pr: int*bool) =
+  (#2 pr, #1 pr)
+      
+(* Tuples: fixed number of pieces that may have different types *)
+
 	      
+(* Lists: any number of pieces that have the same type *)
+val e1 = [];
+val e2 = [1,2,3];
+e1 :: e2
+	  
