@@ -34,8 +34,8 @@ val ans = pow x
 (* pair: ta * tb *)
 val e = (3, 2);
 
-(#1 e);
-(#2 e);	      
+#1 e;
+#2 e;	      
 
 
 
@@ -56,3 +56,54 @@ null e2;
 hd e2;
 tl e2;
 
+fun sum_list(xs: int list) =
+  if null xs
+  then 0
+  else
+      hd xs + sum_list(tl xs)
+
+
+fun append(xs: int list, ys: int list) =
+  if null xs
+  then ys
+  else (hd xs) :: append((tl xs), ys)
+
+fun firsts(xs: (int * int) list) =
+  if null xs
+  then []
+  else (#1 (hd xs)) :: firsts(tl xs)
+
+fun silly(z:int) =
+  let
+      val x = if z > 0 then z else 42
+      val y = x + z + 9
+  in
+      if x > y then x * 2 else y * y
+  end
+
+(* nested function *)
+fun countup_from1(x: int) =
+  let
+      fun count (from : int) =
+	if from = x
+	then [x]
+	else from :: count(from + 1)
+  in
+      count(1)
+  end
+
+fun max(xs : int list) =
+  if null xs
+  then 0
+  else if null (tl xs)
+  then hd xs
+  else
+      let val tl_ans = max(tl xs)
+      in
+	  if hd xs > tl_ans
+	  then hd xs
+	  else
+	      tl_ans
+      end
+
+	  
