@@ -92,18 +92,44 @@ fun countup_from1(x: int) =
       count(1)
   end
 
+(* options *)
 fun max(xs : int list) =
   if null xs
-  then 0
+  then NONE
   else if null (tl xs)
-  then hd xs
+  then SOME (hd xs)
   else
       let val tl_ans = max(tl xs)
       in
-	  if hd xs > tl_ans
-	  then hd xs
+	  if isSome tl_ans andalso hd xs > (valOf tl_ans)
+	  then SOME (hd xs)
 	  else
 	      tl_ans
       end
 
-	  
+
+	  (*
+SOME (1); (* int option *)
+*)
+
+valOf (max [1,2,3,4]);
+
+
+fun max2 (xs : int list) =
+  if null xs
+  then NONE
+  else let
+      fun max_nonempty (xs: int list) =
+	if null (tl xs)
+	then hd xs
+	else let val tl_ans = max_nonempty(tl xs)
+	     in
+		 if hd xs > tl_ans
+		 then hd xs
+		 else tl_ans
+	     end
+  in
+      SOME (max_nonempty xs)
+  end
+	   
+
