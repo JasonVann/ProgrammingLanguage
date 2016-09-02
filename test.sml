@@ -106,13 +106,14 @@ fun max(xs : int list) =
 	  else
 	      tl_ans
       end
+	  
 
 
-	  (*
+(* ?? Below only works in interactive mode
 SOME (1); (* int option *)
-*)
 
 valOf (max [1,2,3,4]);
+*)
 
 
 fun max2 (xs : int list) =
@@ -133,3 +134,8 @@ fun max2 (xs : int list) =
   end
 	   
 
+1 orelse 2;
+not True;
+
+	     
+Real.fromInt 2 > 0.5;
