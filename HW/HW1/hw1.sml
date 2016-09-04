@@ -24,20 +24,17 @@ fun number_in_months(dates: (int * int * int) list, months: int list) =
       number_in_month(dates, hd months) + number_in_months(dates, tl months)
 
 fun dates_in_month(dates: (int * int * int) list, month: int) =
-  if (null dates)
+  if null dates
   then
-      NONE
+      (* [(2000,1,1)] *)
+      []
   else
       let val ans = dates_in_month(tl dates, month)
       in
-      if #2 (hd dates) = month
-      then
-	  if isSome ans
+	  if #2 (hd dates) = month
 	  then
-	      [(SOME (hd dates))] @ ans
+	      (hd dates) :: ans
 	  else
-	      [SOME (hd dates)]
-      else
-	  ans
+	      ans
       end
 	  
