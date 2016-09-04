@@ -103,8 +103,11 @@ fun month_range(day1: int, day2: int) =
 	  else
 	      what_month(hd days) :: iter(tl days)
   in
-      iter(all_days(day1, day2))
-	  
+      if day1 > day2
+      then
+	  []
+      else
+	  iter(all_days(day1, day2))
   end
       
 fun oldest(dates: (int * int * int) list) =
@@ -151,14 +154,36 @@ fun remove_duplicates(months: int list, cur: int list) =
 	  remove_duplicates(tl months, cur @ [hd months])
   end
 
+fun remove_duplicates2(nums: int list) = 
+  let fun is_in(num: int, nums: int list) =
+	if null nums
+	then
+	    false
+	else
+	    if num = hd nums
+	    then true
+	    else
+		is_in(num, tl nums)
+  in
+      if null nums
+      then
+	  []
+      else
+	  if is_in(hd nums, tl nums)
+	  then
+	      remove_duplicates2(tl nums)
+	  else
+	      (hd nums) :: remove_duplicates2(tl nums)
+  end
+      
 fun number_in_months_challenge(dates: (int * int * int) list, months: int list) =
-  let val months = remove_duplicates(months, [])
+  let val months = remove_duplicates2(months)
   in
       number_in_months(dates, months)
   end
       
 fun dates_in_months_challenge(dates: (int * int * int) list, months: int list) =
-  let val months = remove_duplicates(months, [])
+  let val months = remove_duplicates2(months)
   in
       dates_in_months(dates, months)
   end
