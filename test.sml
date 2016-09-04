@@ -137,5 +137,7 @@ fun max2 (xs : int list) =
 1 orelse 2;
 not True;
 
-	     
+Int.toString(2);
+"Hello" ^ "," ^ "World";
+
 Real.fromInt 2 > 0.5;
