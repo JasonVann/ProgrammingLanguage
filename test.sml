@@ -17,6 +17,7 @@ if e1 then e2 else e3; (* e2, e3 must have same type *)
 
 val int_div = 3 div 2;
 val real_div = 3.0 / 2.0;
+6 mod 3;
 
 val abs_of_z = if z < 0 then 0 - z else z;
 
