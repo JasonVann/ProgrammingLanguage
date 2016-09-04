@@ -43,7 +43,7 @@ fun dates_in_months(dates: (int * int * int) list, months: int list) =
   then
       []
   else
-      dates_in_month(dates, hd months) :: dates_in_months(dates, tl months)
+      dates_in_month(dates, hd months) @ dates_in_months(dates, tl months)
 
 fun get_nth(str: string list, n: int) =
   if n = 1
@@ -57,4 +57,65 @@ fun date_to_string(date: (int * int * int)) =
   in
       get_nth(months, #2 date) ^ Int.toString(#3 date) ^ "," ^ Int.toString(#1 date)
   end
+
+fun number_before_reaching_sum(sum: int, nums: int list) =
+  let fun iter(cur_sum: int, count: int, sum: int, nums: int list) =
+	if cur_sum < sum
+	then
+	    if cur_sum + hd nums >= sum
+	    then count
+	    else
+		iter(cur_sum + hd nums, count + 1, sum, tl nums)
+	else
+	    0 (* Impossible *)
+					
+  in
+      iter(0, 0, sum, nums) 
+  end
       
+fun what_month(day: int) =
+  let val months = [31,28,31,30,31,30,31,31,30,31,30,31]
+  in
+      1 + number_before_reaching_sum(day, months)
+  end
+      
+fun month_range(day1: int, day2: int) = 
+  let val month1 = what_month(day1)
+      val month2 = what_month(day2)
+      fun all_days(day1: int, day2: int) =
+	if day1 = day2
+	then
+	    [day2]
+	else
+	    day1 :: all_days(day1 + 1, day2)
+      fun iter(days: int list) =
+	  if null days
+	  then
+	      []
+	  else
+	      what_month(hd days) :: iter(tl days)
+  in
+      iter(all_days(day1, day2))
+	  
+  end
+      
+fun oldest(dates: (int * int * int) list) =
+  let fun iter(cur: (int * int * int), dates: (int * int * int) list) =
+	if null dates
+	then
+	    SOME cur
+	else
+	    if is_older(cur, hd dates)
+	    then
+		iter(cur, tl dates)
+	    else
+		iter(hd dates, tl dates)
+  in
+      if null dates
+      then
+	  NONE
+      else
+	  iter(hd dates, dates)
+  end
+      
+
