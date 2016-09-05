@@ -49,7 +49,18 @@ fun get_substitutions2(substitutions, s) =
   in
       aux(substitutions, s, [])
   end
-	  
+
+fun similar_names(substitutions, {first = x, middle = y, last = z}) =
+  let fun aux(substitutions) =
+      case substitutions of
+	  [] => []
+	| xs::xss => {first=xs, middle = y, last = z} :: aux(xss)
+							    
+      val sub = get_substitutions2(substitutions, x)
+  in
+      {first = x, middle = y, last = z} :: aux(sub)
+  end
+      
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
