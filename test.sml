@@ -132,13 +132,114 @@ fun max2 (xs : int list) =
 	     end
   in
       SOME (max_nonempty xs)
-  end
-	   
+  end	   
+; (* ?? Not sure why need this *)
+  
+true orelse false;
 
-1 orelse 2;
-not True;
+not true;
 
 Int.toString(2);
 "Hello" ^ "," ^ "World";
 
+
 Real.fromInt 2 > 0.5;
+
+(* record *)
+val x = {bar = (1+2, true), foo = 3 + 4, baz = (false, 9)};
+#foo x;
+
+val y={3="hi", 1=true, 2=3+2};
+(* val y = (true, 5, "hi") *)
+
+(* datatype binding *)
+datatype mytype = TwoInts of int * int
+		| Str of string
+                | Pizza
+		      
+(* pattern matching*)
+fun f x =
+  case x of
+      Pizza => 3
+   |  Str s => 8
+   | TwoInts(i1, i2) => i1 + i2
+				 
+val a = Str "hi"
+val b = Str
+val c = Pizza
+val d = TwoInts(1+2, 3+4)
+val e = a;
+
+f Pizza;
+f (Str "hi");
+f (TwoInts (3, 4));
+	    
+String.size "hello";
+Int.max(1,2);
+
+datatype suit = Club | Diamond | Heart | Spade
+
+datatype rank = Jack | Queen | King | Ace | Num of int
+
+datatype id = StudentNum of int
+	    | Name of string * (string option) * string
+
+datatype exp = Constant of int
+	     | Negate of exp
+	     | Add of exp * exp
+	     | Multiply of exp * exp
+
+fun eval e =
+  case e of
+      Constant i => i
+   |  Negate e2  => ~ (eval e2)
+   |  Add(e1,e2) => (eval e1) + (eval e2)
+   |  Multiply(e1,e2) => (eval e1) * (eval e2)
+
+(* Function Patterns *)
+fun eval2 (Constant i) = i
+  | eval2  (Negate e2) = ~ (eval e2)
+  | eval2 (Add(e1, e2)) = (eval2 e1) + (eval2 e2)
+  | eval2 (Multiply(e1, e2)) = (eval2 e1) * (eval2 e2)
+;
+  eval2(Add(Constant 1, Constant 2));
+
+fun max_constant e =
+  let fun max_of_two(e1, e2) =
+	let val m1 = max_constant e1
+	    val m2 = max_constant e2
+	in Int.max(m1, m2) end
+  in
+      case e of
+	  Constant i => i
+	| Negate e2  => max_constant e2
+	| Add(e1, e2) => max_of_two(e1, e2)
+	| Multiply(e1, e2) => max_of_two(e1, e2)
+  end
+      
+fun append(xs, ys) =
+  case xs of
+      [] => ys
+    | x :: xs' => x :: append(xs', ys)
+
+val (a1, a2, a3) = (1,2,3);
+
+exception ListLengthMismatch
+
+(* nested pattern *)
+fun zip3 list_triple =
+  case list_triple of
+      ([], [], []) => []
+    | (hd1::tl1, hd2::tl2, hd3::tl3) => (hd1, hd2, hd3) :: zip3(tl1, tl2, tl3)
+    | _ => raise ListLengthMismatch
+
+fun unzip3 lst =
+  case lst of
+      [] => ([], [], [])
+    | (a,b,c)::tl => let val (l1, l2, l3) = unzip3 tl
+		     in
+			 (a::l1, b::l2, c::l3)
+		     end
+			 
+
+		  
