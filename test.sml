@@ -241,5 +241,19 @@ fun unzip3 lst =
 			 (a::l1, b::l2, c::l3)
 		     end
 			 
+exception MyUndersirableCondition
 
+fun maxlist(xs, ex) =
+  case xs of
+      [] => raise ex
+    | x::[] => x
+    | x::xs' => Int.max(x, maxlist(xs', ex))
+
+		       
+val x = maxlist([3,4,5], MyUndersirableCondition)
+	handle MyUndersirableCondition => 42
+					      
+val x1 = maxlist([], MyUndersirableCondition)
+	handle MyUndersirableCondition => 42
+					      
 		  
