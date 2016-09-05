@@ -22,9 +22,13 @@ val test4 = similar_names ([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie"
 
 val test5 = card_color (Clubs, Num 2) = Black
 
-val test6 = card_value (Clubs, Num 2) = 2
-
+val test6 = card_value (Clubs, Num 2) = 2;
+val test61 = card_value(Clubs, Num 10) = 10;
+val test62 = card_value(Clubs, Ace) = 11;
+val test63 = card_value(Clubs, King) = 10;
+					    
 val test7 = remove_card ([(Hearts, Ace)], (Hearts, Ace), IllegalMove) = []
+val test71 = remove_card ([(Hearts, Ace), (Hearts, King)], (Hearts, King), IllegalMove) = [(Hearts, Ace)];
 
 val test8 = all_same_color [(Hearts, Ace), (Hearts, Ace)] = true
 

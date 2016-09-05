@@ -73,3 +73,27 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+fun card_color(a_suit, a_rank) =
+  case a_suit of
+      Clubs => Black
+    | Spades => Black
+    | _ => Red
+
+fun card_value(a_suit, a_rank) =
+  case a_rank of
+      Num i => i
+    | Ace => 11
+    | _ => 10
+
+fun remove_card(cs, c, e) =
+  let fun aux(cs, res) =
+	case cs of
+	    [] => raise e
+	  | c'::cs' => if c' = c
+		      then res
+		      else
+			  aux(cs', res @ [c'])
+  in
+      aux(cs, [])
+  end
+      
