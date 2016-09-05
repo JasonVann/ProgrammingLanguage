@@ -255,5 +255,8 @@ val x = maxlist([3,4,5], MyUndersirableCondition)
 					      
 val x1 = maxlist([], MyUndersirableCondition)
 	handle MyUndersirableCondition => 42
-					      
+
+val int_list_option = SOME[1,2,3];
+val int_option_list = [SOME 1, SOME 2, SOME 3];
+
 		  

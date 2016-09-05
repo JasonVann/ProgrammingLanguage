@@ -7,7 +7,23 @@ fun same_string(s1 : string, s2 : string) =
     s1 = s2
 
 (* put your solutions for problem 1 here *)
-
+fun all_except_option(str, strs) =
+  let fun aux(has_seen, str, strs,res) =
+	case strs of
+	    [] => (has_seen, [])
+	  | str'::strs' => if same_string(str, str')
+			   then
+			       (true,res @ strs')
+			   else
+			       aux(false, str, strs', res@[str'])
+      val (has_seen, res) = aux(false,str, strs, [])
+  in
+      if has_seen
+      then SOME (res)
+      else
+	  NONE
+  end
+        
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
