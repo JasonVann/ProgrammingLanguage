@@ -23,7 +23,33 @@ fun all_except_option(str, strs) =
       else
 	  NONE
   end
-        
+
+fun get_substitutions1(substitutions, s) =
+  case substitutions of
+      [] => []
+    | xs :: xss =>
+      let val ans = all_except_option(s, xs)
+      in
+	  case ans of
+	      NONE => get_substitutions1(xss,s)
+	    | SOME res => res @ get_substitutions1(xss, s) 
+      end
+
+fun get_substitutions2(substitutions, s) =
+  let fun aux(substitutions, s, res) =
+	case substitutions of
+	    [] => res
+	  | xs :: xss =>
+	    let val ans = all_except_option(s, xs)
+	    in
+		case ans of
+		    NONE => aux(xss, s, res)
+		  | SOME temp => aux(xss, s, res @ temp)
+	    end	
+  in
+      aux(substitutions, s, [])
+  end
+	  
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
