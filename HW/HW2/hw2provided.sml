@@ -90,7 +90,7 @@ fun remove_card(cs, c, e) =
 	case cs of
 	    [] => raise e
 	  | c'::cs' => if c' = c
-		      then res
+		      then res @ cs'
 		      else
 			  aux(cs', res @ [c'])
   in
@@ -146,4 +146,94 @@ fun officiate(card_list, move_list, goal) =
   in
       aux([], card_list, move_list)
   end
+
+(*
+fun score_challenge(cs, goal) =
+  let fun has_A(cs) =
+	case cs of
+	    [] => false
+	  | c::cs' => if card_value(c) = 11
+		      then true
+		      else
+			  has_A(cs')
+
+      val sum = sum_cards(cs)
+      fun preli_score(sum) =
+	let val temp = 
+	    if sum > goal
+	    then 3 * (sum - goal)
+	    else
+		goal - sum
+	in
+	    if all_same_color(cs)
+	    then
+		temp div 2
+	    else
+		temp
+	end
+	    
+  end
+  in
+      case cs of
+	  [] => 
+  end
+*)
+
+fun careful_player(cs, goal) =
+  let val e = IllegalMove
+      fun should_discard(cs, hl, goal, temp) =
+      (* true if by discarding a card and then drawing the 1st card of cs will give a score of 0 *)
+	case cs of
+	    [] => (false, (Hearts, Num 1))
+	  | c::cs' =>  case hl of
+			  [] => (false, (Hearts, Num 1))
+			| h::hl' =>  if score(temp @ remove_card(hl, h, e)@[c], goal) = 0
+				     then
+					 (true, h)
+				     else
+					 should_discard(cs, hl', goal, temp@[h])
+      (* fun discard_largest(cs, hl, goal, temp) =
+	*)
+      fun aux(cs, hl, ml) =
+	if score(hl, goal) = 0
+	then
+	    ml
+	else
+	    let val (ans, discard_card) =  should_discard(cs, hl, goal, [])
+	    in
+	    if ans = true
+	    then
+		ml @ [Discard(discard_card)]
+	    else
+		
+		if goal > score(hl, goal) + 10
+		then
+		    case cs of
+			[] => aux(cs, hl, ml @ [Draw])
+		      | c::cs' => aux(remove_card(cs, c, e), hl@[c], ml @ [Draw])
+		else
+		    case cs of
+			c::cs' => if score(hl @ [c], goal) < goal
+				  (* if safe to draw *)
+				  then
+				      aux(remove_card(cs, c, e), hl @[c], ml @ [Draw])
+				  else
+				      (* pop the 1st card *)
+				      (case hl of
+					  [] => aux(cs, hl, ml)
+					| h::hl' => aux(cs, remove_card(hl, h, e), ml @ [Discard(h)])
+				      )
+		      | _ =>
+			(* pop the 1st card *)
+			case hl of
+			   [] => aux(cs, hl, ml)
+			   | h::hl' => aux(cs, remove_card(hl, h, e), ml @ [Discard(h)])
+
+	    end
+		
+  in
+      aux(cs, [], [])
+  end
       
+	
+	
