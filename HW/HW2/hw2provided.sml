@@ -184,7 +184,7 @@ fun careful_player(cs, goal) =
       fun should_discard(cs, hl, goal, temp) =
       (* true if by discarding a card and then drawing the 1st card of cs will give a score of 0 *)
 	case cs of
-	    [] => (false, (Hearts, Num 1))
+	    [] => (false, (Hearts, Num 1)) (* return a dummy card so we can easily extract card in the true case*)
 	  | c::cs' =>  case hl of
 			  [] => (false, (Hearts, Num 1))
 			| h::hl' =>  if score(temp @ remove_card(hl, h, e)@[c], goal) = 0

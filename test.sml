@@ -259,4 +259,49 @@ val x1 = maxlist([], MyUndersirableCondition)
 val int_list_option = SOME[1,2,3];
 val int_option_list = [SOME 1, SOME 2, SOME 3];
 
-		  
+fun n_times(f, n, x) =
+  if n = 0
+  then x
+  else
+      f (n_times(f, n - 1, x))
+
+fun double x = x + x
+fun increment x = x + 1
+
+val x1 = n_times(double, 4, 7)
+val x2 = n_times(increment, 4, 7);
+
+(* checks convergency *)
+fun times_until_zero(f, x) =
+  if x = 0 then 0
+  else
+      1 + times_until_zero(f, f x)
+
+fun triple_n_times(n, x) =
+  n_times(let fun triple x = 3 * x in triple end, n, x)
+
+	 (* Anonymous function *)
+fun triple_n_times_anony(n, x) =
+  n_times(fn x => 3 * x, n, x)
+
+fun rev xs = List.rev xs
+val res2 = List.rev;
+
+fun max(f, xs) =
+  case xs of
+      [] => []
+    | x::xs' => (f x)::map(f, xs')
+
+fun filter(f, xs) =
+  case xs of
+      [] => []
+    | x::xs' => if f x
+		then x::(filter (f, xs'))
+		else
+		    filter(f, xs')
+
+fun is_even v =
+  (v mod 2 = 0)
+
+fun all_even_snd xs = filter((fn (_, v) => is_even v), xs)
+			    
