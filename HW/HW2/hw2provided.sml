@@ -220,14 +220,16 @@ fun careful_player(cs, goal) =
 				  else
 				      (* pop the 1st card *)
 				      (case hl of
-					  [] => aux(cs, hl, ml)
+					  [] => aux(remove_card(cs, c, e), hl@[c], ml@[Draw])
 					| h::hl' => aux(cs, remove_card(hl, h, e), ml @ [Discard(h)])
 				      )
 		      | _ =>
-			(* pop the 1st card *)
+			(* card list is empty *)
+			ml
+			(*
 			case hl of
-			   [] => aux(cs, hl, ml)
-			   | h::hl' => aux(cs, remove_card(hl, h, e), ml @ [Discard(h)])
+			   [] => ml
+			   | h::hl' => aux(cs, remove_card(hl, h, e), ml @ [Discard(h)]) *)
 
 	    end
 		

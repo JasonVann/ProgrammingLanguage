@@ -41,7 +41,7 @@ val test11 = score ([(Hearts, Num 2),(Clubs, Num 10)],10) = 6;
 val test12 = score ([(Hearts, Num 2),(Hearts, Num 10)],10) = 3;
 
 val test11 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
-
+									   
 val test12 = officiate ([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
                         [Draw,Draw,Draw,Draw,Draw],
                         42)
@@ -52,5 +52,8 @@ val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          42);
                false) 
               handle IllegalMove => true)
-             
-             
+
+val testb1 = careful_player([(Spades, Num 7)], 10);
+val testb2 = careful_player([(Diamonds, Num 2), (Clubs, Ace)], 11);
+val testb3 = careful_player([(Spades,Num 7),(Hearts,King),(Clubs,Ace),(Diamonds,Num 2)], 18)
+			   
