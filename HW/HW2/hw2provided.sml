@@ -96,4 +96,36 @@ fun remove_card(cs, c, e) =
   in
       aux(cs, [])
   end
+
+fun all_same_color(cs) =
+  case cs of
+      [] => true
+    | c::[] => true
+    | c::c2::cs => if card_color c = card_color c2
+		   then all_same_color(c2::cs)
+		   else
+		       false
+		       
+fun sum_cards(cs) =
+  let fun aux(cs, res) =
+	case cs of
+	    [] => res
+	    | c::cs' => aux(cs', res + card_value(c))
+  in
+      aux(cs, 0)
+  end
+
+fun score(cs, goal) =
+  let val sum = sum_cards(cs)
+      val preliminary_score = if sum > goal
+			      then 3 * (sum - goal)
+			      else
+				  goal - sum
+  in
+      if all_same_color(cs)
+      then
+	  preliminary_score div 2
+      else
+	  preliminary_score
+  end
       
