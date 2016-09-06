@@ -128,4 +128,22 @@ fun score(cs, goal) =
       else
 	  preliminary_score
   end
+
+fun officiate(card_list, move_list, goal) =
+  let val e = IllegalMove
+      fun aux(held_list, card_list, move_list) =
+	case move_list of
+	    [] => score(held_list, goal)
+	  | Discard c :: ml => aux(remove_card(held_list, c, e), card_list, ml)
+	  | Draw :: ml => case card_list of
+			      [] => score(held_list, goal)
+			   | c::cs => 
+			     if sum_cards(held_list@[c]) > goal
+			     then
+				 score(held_list@[c], goal)
+			     else
+				 aux(held_list @ [c], cs, ml)
+  in
+      aux([], card_list, move_list)
+  end
       
