@@ -315,4 +315,39 @@ fun f g =
 fun g y =
   y + x11;
  *)
-			    
+
+(* fold left *)
+fun fold (f, acc, xs) =
+  case xs of
+      [] => acc
+    | x::xs => fold(f, f(acc, x), xs)
+
+fun f1 xs = fold((fn (x, y) => x + y), 0, xs) (* sum list *)
+
+(* ('b -> 'c) * ('a -> 'b) -> ('a -> 'c) *)
+fun compose(f, g) = fn x => f(g x)
+			     
+(* f o g *)
+			     
+fun sqrt_of_abs i = (Math.sqrt o Real.fromInt o abs) i
+
+(* Pipeline *)
+infix !>
+fun x !> f = f x
+fun sqrt_of_abs i = i !> abs !> Real.fromInt !> Math.sqrt
+
+fun backup (f,g) = fn x =>
+		      case f x of
+			  NONE => g x
+			| SOME y => y
+					
+fun backup2(f, g) = fn x => f x handle _ => g x;
+					      
+(* currying *)
+val sorted3 = fn x => fn y => fn z => z >= y andalso y >= x
+
+val t2 = ((sorted 3 7) 9) 11;
+
+(* syntactic sugar *)
+fun sorted3_nicer x y z = z >= y andalso y >= x
+						  
