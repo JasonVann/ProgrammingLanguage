@@ -287,11 +287,12 @@ fun triple_n_times_anony(n, x) =
 fun rev xs = List.rev xs
 val res2 = List.rev;
 
-fun max(f, xs) =
+fun map(f, xs) =
   case xs of
       [] => []
-    | x::xs' => (f x)::map(f, xs')
-
+    | x::xs' => (f x)::(map(f, xs'))
+;
+  
 fun filter(f, xs) =
   case xs of
       [] => []
@@ -304,4 +305,14 @@ fun is_even v =
   (v mod 2 = 0)
 
 fun all_even_snd xs = filter((fn (_, v) => is_even v), xs)
+
+(* x11 is undefined where g is defined 
+fun f g =
+  let val x11 = 3
+  in g 2
+  end
+
+fun g y =
+  y + x11;
+ *)
 			    

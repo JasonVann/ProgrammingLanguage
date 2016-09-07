@@ -203,7 +203,7 @@ fun careful_player(cs, goal) =
 	    in
 	    if ans = true
 	    then
-		ml @ [Discard(discard_card)]
+		ml @ [Discard(discard_card)] @ [Draw]
 	    else
 		
 		if goal > score(hl, goal) + 10
