@@ -4,10 +4,13 @@
 (* All the tests should evaluate to true. For example, the REPL should say: val test1 = true : bool *)
 
 val test1 = only_capitals ["A","B","C"] = ["A","B","C"]
+val test11 = only_capitals ["a", "def", "CEFa"] = ["CEFa"];
 
 val test2 = longest_string1 ["A","bc","C"] = "bc"
+val test21 = longest_string1 ["A","bce","CDE"] = "bce";
 
 val test3 = longest_string2 ["A","bc","C"] = "bc"
+val test31 = longest_string21 ["A","bce","CDE"] = "CDE";
 
 val test4a = longest_string3 ["A","bc","C"] = "bc"
 

@@ -358,3 +358,5 @@ fun other_curry2 f x y = f y x
 structure x = List;
 signature x = LIST;
 
+#"a" (* type char *)
+    
