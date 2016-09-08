@@ -351,3 +351,10 @@ val t2 = ((sorted 3 7) 9) 11;
 (* syntactic sugar *)
 fun sorted3_nicer x y z = z >= y andalso y >= x
 						  
+(* Equivalent *)
+fun other_curry f = fn x => fn y => f y x 
+fun other_curry2 f x y = f y x
+
+structure x = List;
+signature x = LIST;
+
