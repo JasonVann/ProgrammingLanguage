@@ -81,3 +81,14 @@ fun longest_capitalized(strs) =
 
 fun rev_string(str) =
     (String.implode o List.rev o String.explode)  str
+
+fun first_answer f a =
+  let fun g (x, y) = case (f x) of
+		      NONE => (case (f y) of
+				  NONE => NONE
+				       | SOME v' => SOME v' )
+		    | SOME v => SOME v
+  in
+      foldr g NONE a
+  end
+      
