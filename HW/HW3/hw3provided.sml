@@ -47,7 +47,7 @@ fun longest_string2(strs) =
 (* the type for f doesn't quite meet with the requirement *)
 fun longest_string_helper f strs =
   foldl f "" strs
-
+	
 fun longest_string3(strs) =
   let fun f (x, y) = if (String.size x) > (String.size y)
 		     then x
@@ -66,3 +66,18 @@ fun longest_string4(strs) =
       longest_string_helper f strs
   end
 
+
+fun longest_capitalized(strs) =
+  let fun f(x, y) = if (String.size x) > (String.size y) andalso Char.isUpper(String.sub(x,0))
+		    then
+			(* (print "b "; print x; print "_"; print y; x) *)
+			x
+		    else
+			(* (print "a "; print x; print "_"; print y; y) *)
+			y
+  in
+      longest_string_helper f strs
+  end
+
+fun rev_string(str) =
+    (String.implode o List.rev o String.explode)  str

@@ -359,4 +359,7 @@ structure x = List;
 signature x = LIST;
 
 #"a" (* type char *)
-    
+						  
+List.rev ["abc", "def"];
+
+String.implode(String.explode "abc");
