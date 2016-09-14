@@ -346,7 +346,7 @@ fun backup2(f, g) = fn x => f x handle _ => g x;
 (* currying *)
 val sorted3 = fn x => fn y => fn z => z >= y andalso y >= x
 
-val t2 = ((sorted 3 7) 9) 11;
+val t2 = ((sorted3 7) 9) 11;
 
 (* syntactic sugar *)
 fun sorted3_nicer x y z = z >= y andalso y >= x
@@ -358,8 +358,32 @@ fun other_curry2 f x y = f y x
 structure x = List;
 signature x = LIST;
 
-#"a" (* type char *)
+(* #"a": type char *)
 						  
 List.rev ["abc", "def"];
 
 String.implode(String.explode "abc");
+
+(* mutual recursion *)
+datatype t1 = Foo of int | Bar of t2
+     and t2 = Baz of string | Quux of t1
+
+fun no_zeros_or_empty_strings_t1 x =
+  case x of
+      Foo i => i <> 0
+    | Bar y => no_zeros_or_empty_strings_t2 y
+and no_zeros_or_empty_strings_t2 x =
+    case x of
+	Baz s => size s > 0
+      | Quux y => no_zeros_or_empty_strings_t1 y
+
+fun no_zeros_or_empty_strings_t1_alternate(f, x) =
+  case x of
+      Foo i => i <> 0
+    | Bar y => f y
+
+fun no_zeros_or_empty_string_t2_alternate x =
+  case x of
+      Baz s => size s > 0
+    | Quux y => no_zeros_or_empty_strings_t1_alternate(no_zeros_or_empty_string_t2_alternate, y)
+						      
