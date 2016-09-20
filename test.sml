@@ -421,5 +421,9 @@ val _ = printIfPressed 23;
 onEvent 10;
 onEvent 11;
 
+(* deal with value restriction *)
+val r : int option ref = ref NONE;
+val _ = r := SOME 3;
+valOf(!r);
 		   
 			
