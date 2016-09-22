@@ -80,7 +80,14 @@ fun number_before_reaching_sum(sum: int, nums: int list) =
   in
       iter(0, 0, sum, nums) 
   end
-      
+
+(* Suggested sol *)
+fun number_before_reaching_sum2 (sum: int, lst: int list) =
+  if sum <= hd lst
+  then 0
+  else
+      1 + number_before_reaching_sum2(sum - hd lst, tl lst)
+				     
 fun what_month(day: int) =
   let val months = [31,28,31,30,31,30,31,31,30,31,30,31]
   in
