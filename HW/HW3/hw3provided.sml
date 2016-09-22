@@ -44,7 +44,7 @@ fun longest_string1(strs) =
 fun longest_string2(strs) =
   foldl (fn (x, y) => if (String.size x) >= (String.size y) then x else y) "" strs
 
-(* the type for f doesn't quite meet with the requirement *)
+(* the type for f doesn't quite match with the requirement *)
 fun longest_string_helper f strs =
   foldl f "" strs
 	
@@ -82,13 +82,40 @@ fun longest_capitalized(strs) =
 fun rev_string(str) =
     (String.implode o List.rev o String.explode)  str
 
+(* ?? returns 'b list option ?? as oppsed to 'a list option *)
 fun first_answer f a =
-  let fun g (x, y) = case (f x) of
-		      NONE => (case (f y) of
-				  NONE => NONE
-				       | SOME v' => SOME v' )
-		    | SOME v => SOME v
+  let val ans = List.filter (fn x => case f x of
+					 NONE => false
+				       | SOME v => true) a
   in
-      foldr g NONE a
+      case ans of
+	  [] => raise NoAnswer
+	| x::xs => x
+  end
+
+fun all_answers f a =
+  let val check_NONE = List.filter (fn x => case f x of
+					 NONE => true
+				       | SOME v => false) a
+  in
+      case check_NONE of
+	  [] => SOME a
+	| _ => NONE
   end
       
+(*
+fun all_answers f a =
+  let fun g (x, y) = case (f x) of
+			 NONE => NONE
+		       | SOME v => SOME v @ 				     
+			 (case (f y) of
+				  NONE => NONE
+				  | SOME v' => SOME v' )
+
+  in
+      SOME a
+  end
+*)
+
+
+  

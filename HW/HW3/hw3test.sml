@@ -10,7 +10,7 @@ val test2 = longest_string1 ["A","bc","C"] = "bc"
 val test21 = longest_string1 ["A","bce","CDE"] = "bce";
 
 val test3 = longest_string2 ["A","bc","C"] = "bc"
-val test31 = longest_string21 ["A","bce","CDE"] = "CDE";
+val test31 = longest_string2 ["A","bce","CDE"] = "CDE";
 
 val test4a = longest_string3 ["A","bc","C"] = "bc"
 
@@ -21,9 +21,12 @@ val test51 = longest_capitalized ["A", "bc", "DE"] = "DE";
 
 val test6 = rev_string "abc" = "cba"
 
-val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 4
+val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 4;
 
+val test71 = (first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3] handle NoAnswer => 99) = 99;
+										    
 val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
+val test81 = all_answers (fn x => if x >= 1 then SOME [x] else NONE) [2,3,4,5,6,7,1] = SOME [2,3,4,5,6,7,1];
 
 val test9a = count_wildcards Wildcard = 1
 
