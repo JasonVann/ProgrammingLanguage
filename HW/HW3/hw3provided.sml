@@ -26,6 +26,33 @@ fun g f1 f2 p =
 	  | _                 => 0
     end
 
+fun count_wildcards p =
+  let fun f1 x = 1
+      fun f2 x = 0	     
+  in
+      g f1 f2 p
+      (*
+      case p of
+	  [] => 0
+       | p1 :: p2 => (g f1 f2 p1) + count_wildcards p2 *)
+  end
+
+fun count_wild_and_variable_lengths p =
+  let fun f1 x = 1
+      fun f2 x = String.size x
+  in
+      g f1 f2 p
+  end
+
+fun count_some_var (str, p) =
+  let fun f1 x = 0
+      fun f2 x = if x = str then 1 else 0
+  in
+      g f1 f2 p
+  end
+
+
+  
 (**** for the challenge problem only ****)
 
 datatype typ = Anything

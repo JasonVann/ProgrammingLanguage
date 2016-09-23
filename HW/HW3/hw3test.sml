@@ -29,10 +29,16 @@ val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7]
 val test81 = all_answers (fn x => if x >= 1 then SOME [x] else NONE) [2,3,4,5,6,7,1] = SOME [2,3,4,5,6,7,1];
 
 val test9a = count_wildcards Wildcard = 1
+val test9a1 = count_wildcards (Variable("10")) = 0;
 
-val test9b = count_wild_and_variable_lengths (Variable("a")) = 1
-
-val test9c = count_some_var ("x", Variable("x")) = 1
+val test9b = count_wild_and_variable_lengths (Variable("a")) = 1;
+val test9b1 = count_wild_and_variable_lengths (Variable("abcd")) = 4;
+val c = TupleP [Wildcard, Variable("a"), Variable("efd")];
+val test9b2 = count_wild_and_variable_lengths c = 5;
+	
+val test9c = count_some_var ("x", Variable("x")) = 1;
+val b = TupleP [Wildcard, Wildcard, Wildcard, Variable("a"), Variable("cd"), Variable("a")];
+val test9c2 = count_some_var b = 2;
 
 val test10 = check_pat (Variable("x")) = true
 
