@@ -31,10 +31,6 @@ fun count_wildcards p =
       fun f2 x = 0	     
   in
       g f1 f2 p
-      (*
-      case p of
-	  [] => 0
-       | p1 :: p2 => (g f1 f2 p1) + count_wildcards p2 *)
   end
 
 fun count_wild_and_variable_lengths p =
@@ -51,7 +47,31 @@ fun count_some_var (str, p) =
       g f1 f2 p
   end
 
+fun check_pat p =
+    let 
+	fun f1 x = []
+	fun f2 x = [x]	       
+	fun get_all_vars p =
+	  case p of
+	      Wildcard          => f1 ()
+	    | Variable x        => f2 x
+	    | TupleP ps         => List.foldl (fn (p,i) => (get_all_vars p) @ i) [] ps 
+	    | ConstructorP(_,p) => get_all_vars p
+	    | _                 => []
+	val all_vars = get_all_vars p
+				    
+	fun has_dup x =
+	  case x of
+	      [] => false
+	    | x1::xs => if List.exists (fn y => y = x1) xs then true
+			else
+			    has_dup xs
+    in
+	not (has_dup all_vars)
+    end
 
+fun match (v, p) =
+  
   
 (**** for the challenge problem only ****)
 

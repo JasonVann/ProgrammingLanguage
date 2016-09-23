@@ -424,5 +424,4 @@ val r : int option ref = ref NONE;
 val _ = r := SOME 3;
 valOf(!r);
 		   
-		
-	 
+List.exists (fn x => x = "a") ["e", "a", "efda"];

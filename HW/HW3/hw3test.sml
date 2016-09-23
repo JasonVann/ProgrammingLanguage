@@ -40,7 +40,9 @@ val test9c = count_some_var ("x", Variable("x")) = 1;
 val b = TupleP [Wildcard, Wildcard, Wildcard, Variable("a"), Variable("cd"), Variable("a")];
 val test9c2 = count_some_var b = 2;
 
-val test10 = check_pat (Variable("x")) = true
+val test10 = check_pat (Variable("x")) = true;
+val test101 = check_pat (TupleP [Wildcard, Variable "a", Variable "c", Variable "efsdf", Variable "c"]) = false;
+val test102 = check_pat (TupleP [Wildcard, Variable "a", Variable "c", Variable "efsdf", Variable "c1"]) = true;
 
 val test11 = match (Const(1), UnitP) = NONE
 
