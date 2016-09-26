@@ -425,3 +425,6 @@ val _ = r := SOME 3;
 valOf(!r);
 		   
 List.exists (fn x => x = "a") ["e", "a", "efda"];
+
+ListPair.zip([1,2,3], ["a", "b", "c"]);
+

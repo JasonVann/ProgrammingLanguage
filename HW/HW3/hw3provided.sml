@@ -69,9 +69,6 @@ fun check_pat p =
     in
 	not (has_dup all_vars)
     end
-
-fun match (v, p) =
-  
   
 (**** for the challenge problem only ****)
 
@@ -146,23 +143,49 @@ fun all_answers f a =
 				       | SOME v => false) a
   in
       case check_NONE of
-	  [] => SOME a
+	  [] => (*SOME List.foldl(fn (x,y) => f x @ (f y)) [] a *)
+	  SOME (List.concat (List.mapPartial f a))
 	| _ => NONE
   end
       
-(*
-fun all_answers f a =
-  let fun g (x, y) = case (f x) of
-			 NONE => NONE
-		       | SOME v => SOME v @ 				     
-			 (case (f y) of
-				  NONE => NONE
-				  | SOME v' => SOME v' )
-
-  in
-      SOME a
-  end
-*)
-
-
-  
+fun match (v, p) =
+	case p of
+	    Wildcard => SOME []
+	  | Variable s => SOME [(s,v)]
+	  | UnitP => (case v of
+			  Unit => SOME []
+			| _ => (print "a"; NONE) ) 
+	  | ConstP s => (case v of
+			     Const s' => if s = s' then  SOME []
+					    else
+						NONE
+			   | _ => NONE)
+	  | TupleP ps => (case v of
+			      Tuple vs => if List.length(ps) = List.length(vs)
+					  then
+					      (*List.foldl(fn (p,i) => match(p,i) ) []
+							ListPair.zip(vs, ps) *)
+					       all_answers(fn x =>
+							     case x of
+								 (a,b) => match(a,b)
+							 )
+							(* has to use brackets here *)
+							(ListPair.zip(vs, ps))
+					  else
+					      NONE
+			   | _ => NONE ) 
+	  | ConstructorP(s1, p) => (case v of
+					Constructor(s2, v) => let val temp = match (v, p)
+							      in
+								  if s1 = s2
+								     andalso
+								     not (temp = NONE)
+								  then
+								      temp
+								  else
+								      NONE
+							      end 
+					
+				     | _ => NONE) 
+(*	  | _ => NONE *)
+      	      

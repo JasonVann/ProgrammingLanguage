@@ -38,13 +38,18 @@ val test9b2 = count_wild_and_variable_lengths c = 5;
 	
 val test9c = count_some_var ("x", Variable("x")) = 1;
 val b = TupleP [Wildcard, Wildcard, Wildcard, Variable("a"), Variable("cd"), Variable("a")];
-val test9c2 = count_some_var b = 2;
+val test9c2 = count_some_var("x", b) = 2;
 
 val test10 = check_pat (Variable("x")) = true;
 val test101 = check_pat (TupleP [Wildcard, Variable "a", Variable "c", Variable "efsdf", Variable "c"]) = false;
 val test102 = check_pat (TupleP [Wildcard, Variable "a", Variable "c", Variable "efsdf", Variable "c1"]) = true;
 
 val test11 = match (Const(1), UnitP) = NONE
+val test110 = match(Constructor("a", Const 3), ConstructorP("a", ConstP 3));
+val test111 = match(Unit, Variable "a") = SOME [("a", Unit)];
+val test112 = match(Tuple [Const 5, Const 3], TupleP [ConstP 5, ConstP 3]) = SOME [];
+val test113 = match(Tuple [Const 5, Const 3], TupleP [ConstP 5, ConstP 6]) = NONE;
 
-val test12 = first_match Unit [UnitP] = SOME []
+val test12 = first_match Unit [UnitP] = SOME [];
+
 
