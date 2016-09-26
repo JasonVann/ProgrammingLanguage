@@ -191,5 +191,5 @@ fun match (v, p) =
 (*	  | _ => NONE *)
       	      
 fun first_match v ps =
-  (first_answer (fn p => if match(v, p) = NONE then NONE else match(v, p) )
-	       ps)  (*handle NoAnswer => NONE *)
+  SOME (first_answer (fn p => if match(v, p) = NONE then NONE else match(v, p) )
+	       ps)  handle NoAnswer => NONE 
