@@ -126,7 +126,6 @@ fun longest_capitalized(strs) =
 fun rev_string(str) =
     (String.implode o List.rev o String.explode)  str
 
-(* ?? returns 'b list option ?? as oppsed to 'a list option *)
 fun first_answer f a =
   let val ans = List.filter (fn x => case f x of
 					 NONE => false
@@ -134,7 +133,9 @@ fun first_answer f a =
   in
       case ans of
 	  [] => raise NoAnswer
-	| x::xs => x
+	| x::xs => (case (f x) of
+		       SOME x' => x'
+		    )
   end
 
 fun all_answers f a =
@@ -189,3 +190,6 @@ fun match (v, p) =
 				     | _ => NONE) 
 (*	  | _ => NONE *)
       	      
+fun first_match v ps =
+  (first_answer (fn p => if match(v, p) = NONE then NONE else match(v, p) )
+	       ps)  (*handle NoAnswer => NONE *)
