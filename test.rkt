@@ -36,5 +36,9 @@ line to use your definitions in the REPL (the bottom buffer). You do need this l
        (odd? (lambda (x) (if (zero? x) #f (even? (- x 1))))))
     (if (even? x) 0 1)))
 
-
-  
+; Mutable Pairs
+(define mpr (mcons 1 (mcons #t "hi")))
+(mcar mpr)
+mpr
+(set-mcdr! mpr 47)
+mpr
