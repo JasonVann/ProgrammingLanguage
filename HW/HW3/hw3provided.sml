@@ -88,43 +88,22 @@ fun longest_string1(strs) =
 fun longest_string2(strs) =
   foldl (fn (x, y) => if (String.size x) >= (String.size y) then x else y) "" strs
 
-(* the type for f doesn't quite match with the requirement *)
-fun longest_string_helper f strs =
-  foldl f "" strs
-	
-fun longest_string3(strs) =
-  let fun f (x, y) = if (String.size x) > (String.size y)
+fun longest_string_helper f =
+  foldl (fn (x,y) =>
+	 if f((String.size x), (String.size y))
 		     then x
 		     else
-			 y
-  in
-      longest_string_helper f strs
-  end
+			 y)
+	     ""
+ 
+val longest_string3 = longest_string_helper (fn (x, y) => x > y)
 
-fun longest_string4(strs) =
-  let fun f (x, y) = if (String.size x) >= (String.size y)
-		     then x
-		     else
-			 y
-  in
-      longest_string_helper f strs
-  end
+val longest_string4 = longest_string_helper (fn (x, y) => x >= y)
 
+val longest_capitalized = longest_string1 o only_capitals
 
-fun longest_capitalized(strs) =
-  let fun f(x, y) = if (String.size x) > (String.size y) andalso Char.isUpper(String.sub(x,0))
-		    then
-			(* (print "b "; print x; print "_"; print y; x) *)
-			x
-		    else
-			(* (print "a "; print x; print "_"; print y; y) *)
-			y
-  in
-      longest_string_helper f strs
-  end
-
-fun rev_string(str) =
-    (String.implode o List.rev o String.explode)  str
+val rev_string =
+    (String.implode o List.rev o String.explode)
 
 fun first_answer f a =
   let val ans = List.filter (fn x => case f x of
